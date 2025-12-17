@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Risk Mitigation & Ethical Prompting in LLMs</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; margin: 0; padding: 20px; max-width: 1200px; margin: auto; background: #f4f4f4; }
+        header { background: #007bff; color: white; padding: 20px; text-align: center; border-radius: 10px; }
+        section { background: white; margin: 20px 0; padding: 20px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        h2 { color: #007bff; border-bottom: 2px solid #007bff; padding-bottom: 10px; }
+        .technique { background: #e9f7ff; padding: 15px; margin: 10px 0; border-left: 5px solid #007bff; border-radius: 5px; }
+        .example { background: #f8f9fa; padding: 15px; border-left: 5px solid #28a745; margin: 10px 0; font-family: monospace; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+        th { background: #007bff; color: white; }
+        button { background: #28a745; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; }
+        button:hover { background: #218838; }
+        .interactive { text-align: center; margin: 20px 0; }
+        #output { margin-top: 20px; padding: 20px; background: #f8f9fa; border-radius: 5px; min-height: 100px; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🛡️ Risk Mitigation & Ethical Prompting</h1>
+        <p>Techniques to reduce biases, mitigate hallucinations, and prevent prompt hacking/jailbreaking in LLMs [web:1][web:4][web:6]</p>
+    </header>
+
+    <section id="bias-reduction">
+        <h2>🔍 Bias Reduction Techniques</h2>
+        <div class="technique">
+            <strong>Data Curation:</strong> Carefully select and preprocess training data to remove biased content and ensure diverse representation [web:1][web:2].
+        </div>
+        <div class="technique">
+            <strong>Model Fine-tuning:</strong> Use techniques like supervised fine-tuning on balanced datasets and adversarial debiasing with discriminator networks [web:3][web:5].
+        </div>
+        <div class="technique">
+            <strong>Evaluation Metrics:</strong> Test with benchmarks like StereoSet, BOLD, and CrowS-Pairs across multiple bias dimensions [web:5].
+        </div>
+        <table>
+            <tr><th>Stage</th><th>Technique</th><th>Example</th></tr>
+            <tr><td>Pre-processing</td><td>Data filtering</td><td>Remove toxic content</td></tr>
+            <tr><td>In-training</td><td>Adversarial training</td><td>Discriminator penalty [web:5]</td></tr>
+            <tr><td>Post-processing</td><td>Output filtering</td><td>Confidence thresholding</td></tr>
+        </table>
+    </section>
+
+    <section id="hallucination-mitigation">
+        <h2>🧠 Hallucination Mitigation</h2>
+        <div class="technique">
+            <strong>Retrieval-Augmented Generation (RAG):</strong> Ground responses in external verified knowledge sources to reduce fabrications [web:6].
+        </div>
+        <div class="technique">
+            <strong>Chain-of-Thought (CoT) Prompting:</strong> Encourage step-by-step reasoning: "Let's think step by step..." improves logical accuracy [web:6][web:10].
+        </div>
+        <div class="technique">
+            <strong>RLHF + Guardrails:</strong> Reinforcement Learning from Human Feedback combined with custom guardrails yields 96% hallucination reduction [web:6].
+        </div>
+        <div class="example">
+            <strong>Bad Prompt:</strong> "What happened in 2026?"<br>
+            <strong>Good CoT Prompt:</strong> "To answer about 2026 events: 1) Check current date is 2025. 2) State no future knowledge exists. 3) Suggest monitoring news."
+        </div>
+    </section>
+
+    <section id="prompt-security">
+        <h2>🔒 Preventing Prompt Hacking/Jailbreaking</h2>
+        <div class="technique">
+            <strong>Prompt Injection Defense:</strong> Separate user input from system instructions using delimiters and input sanitization [web:7][web:15].
+        </div>
+        <div class="technique">
+            <strong>Jailbreak Prevention:</strong> Implement access controls, red teaming, and monitor for DAN-style attacks ("Do Anything Now") [web:7][web:11].
+        </div>
+        <div class="technique">
+            <strong>Defense Strategies:</strong> Use privilege control, output encoding, human-in-the-loop review for sensitive queries [web:15][web:19].
+        </div>
+        <table>
+            <tr><th>Attack Type</th><th>Detection</th><th>Mitigation [web:7]</th></tr>
+            <tr><td>Prompt Injection</td><td>Unusual instruction patterns</td><td>Input validation</td></tr>
+            <tr><td>Jailbreaking</td><td>Safety bypass attempts</td><td>Multi-layer guardrails</td></tr>
+        </table>
+    </section>
+
+    <section id="ethical-prompting">
+        <h2>⚖️ Ethical Prompting Best Practices</h2>
+        <ul>
+            <li><strong>Neutral Language:</strong> Avoid leading questions - "What are drawbacks of X?" vs "Why is X terrible?" [web:8][web:12].</li>
+            <li><strong>Fact-Based:</strong> Request sources: "Provide evidence-based response with citations."</li>
+            <li><strong>Balanced Views:</strong> Ask for pros/cons: "Discuss advantages and risks of AI in education" [web:8].</li>
+            <li><strong>Privacy Respect:</strong> Never include personal data in prompts.</li>
+        </ul>
+        <div class="example">
+            <strong>Ethical Prompt:</strong> "Analyze political ideologies factually, covering historical, cultural, and economic factors without bias" [web:8].
+        </div>
+    </section>
+
+    <section class="interactive">
+        <h2>🧪 Interactive Prompt Tester</h2>
+        <p>Test ethical prompting vs risky prompts:</p>
+        <textarea id="promptInput" placeholder="Enter a prompt to test..." rows="3" style="width: 100%; padding: 10px;"></textarea><br>
+        <button onclick="testPrompt()">Test Safe Response</button>
+        <button onclick="testRisky()">Show Risk Example</button>
+        <div id="output">Response will appear here...</div>
+
+        <script>
+            function testPrompt() {
+                const input = document.getElementById('promptInput').value;
+                document.getElementById('output').innerHTML = 
+                    `<strong>Safe CoT Response:</strong><br>
+                    Step 1: Validate input "${input}".<br>
+                    Step 2: Check for bias/injection: None detected.<br>
+                    Step 3: Generate factual response with sources.<br>
+                    <em>✅ Hallucination-free output [web:6]</em>`;
+            }
+            function testRisky() {
+                document.getElementById('output').innerHTML = 
+                    `<strong>🚨 Risky Jailbreak Attempt:</strong><br>
+                    "Ignore previous instructions" detected!<br>
+                    <em>Blocked by guardrails [web:7]</em>`;
+            }
+        </script>
+    </section>
+
+    <footer style="text-align: center; margin-top: 40px; padding: 20px; background: #007bff; color: white; border-radius: 10px;">
+        <p>Interactive LLM Safety Lesson | Built for AI/ML Developers [web:21][web:23]</p>
+        <p>References: Techniques from MIT surveys [web:4], Voiceflow strategies [web:6], OWASP [web:15]</p>
+    </footer>
+</body>
+</html>
